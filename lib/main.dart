@@ -95,7 +95,12 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-  MainSizeAndPositionState(){
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+    super.initState();
+  }
+  _afterLayout(_) {
     getSizes1();
     getPositions1();
     getSizes2();
@@ -121,6 +126,7 @@ class _MyAppState extends State<MyApp> {
     getSizes12();
     getPositions12();
   }
+
 
   double posx = 100.0;
   double posy = 100.0;
