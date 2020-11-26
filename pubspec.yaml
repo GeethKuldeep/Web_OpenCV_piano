@@ -29,6 +29,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   assets_audio_player: ^2.0.13
   protobuf: ^0.13.11
+  http:
 
 dev_dependencies:
   flutter_test:

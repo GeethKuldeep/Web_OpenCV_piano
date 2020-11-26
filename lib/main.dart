@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Sound.dart';
+import 'dimension.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,8 +12,12 @@ double get keyWidth => 94 + (125 * _widthRatio);
 double _widthRatio = 1.43;
 double posx = 100.0;
 double posy = 100.0;
+int i=0;
+List<bool> ispressed=[false,false,false,false,false,false,false,false,false,false,false,false];
 
 class _MyAppState extends State<MyApp> {
+
+
   void onTapDown(BuildContext context, TapDownDetails details) {
     print('${details.globalPosition}');
     final RenderBox box = context.findRenderObject();
@@ -23,7 +28,19 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  void settingkeynumber(){
+    while(i<12){
+      if(keynumber == i){
+        setState(() {
+          ispressed[i]=true;
+          playSound(1);
+          ispressed[i]=false;
+        });
+      }
+      i=i+1;
+    }
 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +58,13 @@ class _MyAppState extends State<MyApp> {
             return SafeArea(
               child: Stack(children: <Widget>[
                 Row(mainAxisSize: MainAxisSize.min, children: <Widget>[
-                  buildKey(1,false),
-                  buildKey(2,false),
-                  buildKey(3,false),
-                  buildKey(4,false),
-                  buildKey(5,false),
-                  buildKey(6,false),
-                  buildKey(7,false),
+                  buildKey(1,false,ispressed[0]),
+                  buildKey(2,false,ispressed[1]),
+                  buildKey(3,false,ispressed[2]),
+                  buildKey(4,false,ispressed[3]),
+                  buildKey(5,false,ispressed[4]),
+                  buildKey(6,false,ispressed[5]),
+                  buildKey(7,false,ispressed[6]),
                 ]),
                 Positioned(
                     left: 0.0,
@@ -59,12 +76,12 @@ class _MyAppState extends State<MyApp> {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Container(width: keyWidth * .5),
-                          buildKey(1,true),
-                          buildKey(2,true),
+                          buildKey(1,true,ispressed[7]),
+                          buildKey(2,true,ispressed[8]),
                           Container(width: keyWidth),
-                          buildKey(3,true),
-                          buildKey(4,true),
-                          buildKey(5,true),
+                          buildKey(3,true,ispressed[9]),
+                          buildKey(4,true,ispressed[10]),
+                          buildKey(5,true,ispressed[11]),
                           Container(width: keyWidth * .5),
                         ])),
               ]),
@@ -75,19 +92,13 @@ class _MyAppState extends State<MyApp> {
     );
 
   }
-  Widget buildKey(int a, bool accidental) {
+  Widget buildKey(int a, bool accidental,ispressed) {
     final pianoKey = Stack(
       children: <Widget>[
             Material(
                 borderRadius: borderRadius,
                 color: accidental ? Colors.black : Colors.white,
                 child: GestureDetector(
-                  child: InkWell(
-                    borderRadius: borderRadius,
-                    highlightColor: Colors.grey,
-                    onTap: () {},
-                    onTapDown: (_) => playSound(a),
-                  ),
                   onTapDown: (TapDownDetails details) => onTapDown(context, details),
                 )
             )
@@ -95,8 +106,11 @@ class _MyAppState extends State<MyApp> {
     );
     if (accidental) {
       return Container(
+
           width: keyWidth,
           margin: EdgeInsets.symmetric(horizontal: 2.0),
+          decoration: BoxDecoration(
+              border: ispressed ? Border.all(color: Colors.grey) : accidental ? Border.all(color: Colors.black) : Border.all(color: Colors.white) ),
           padding: EdgeInsets.symmetric(horizontal: keyWidth * .1),
           child: Material(
               elevation: 6.0,
