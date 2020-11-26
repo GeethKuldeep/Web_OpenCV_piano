@@ -78,10 +78,7 @@ class _MyAppState extends State<MyApp> {
   Widget buildKey(int a, bool accidental) {
     final pianoKey = Stack(
       children: <Widget>[
-        Semantics(
-            button: true,
-
-            child: Material(
+            Material(
                 borderRadius: borderRadius,
                 color: accidental ? Colors.black : Colors.white,
                 child: GestureDetector(
@@ -94,7 +91,6 @@ class _MyAppState extends State<MyApp> {
                   onTapDown: (TapDownDetails details) => onTapDown(context, details),
                 )
             )
-        ),
       ],
     );
     if (accidental) {
